@@ -1,0 +1,145 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\{AttendenceRecords, Department, User, WorkSchedules, LeaveBalances};
+use App\Traits\{image,helperTarit};
+use App\Exports\AttendanceExport;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
+
+class AdminController extends Controller
+{
+    use helperTarit;
+    
+    public function index()
+    {
+        $user = auth()->user();
+        $department = Department::where('user_id', $user->id)->first();
+
+        $employees = collect();
+        if ($department) {
+            $employees = User::where('department_id', $department->id)
+                ->whereHas('roles', function ($q) {
+                    $q->where('name', 'Employee');
+                })
+                ->get();
+        }
+
+        $attendences = AttendenceRecords::whereIn('user_id', $employees->pluck('id'))
+            ->where('status', 'present')
+            ->get();
+
+        $absents = AttendenceRecords::whereIn('user_id', $employees->pluck('id'))
+            ->where('status', 'absent')
+            ->get();
+
+        $lates = AttendenceRecords::whereIn('user_id', $employees->pluck('id'))
+            ->where('status', 'late')
+            ->get();
+        return view('Admin.dashboard', [
+            'department' => $department,
+            'employees' => $employees,
+            'attendences' => $attendences,
+            'absents' => $absents,
+            'lates' => $lates
+        ]);
+    }
+
+    public function get_department()
+    {
+        $department = Department::where('user_id', auth()->user()->id)->first();
+        return view('Admin.department.index', compact('department'));
+    }
+
+    //====================================== Employees ============================================================//
+    public function get_department_employees() {
+        $user = auth()->user();
+        $department = Department::where('user_id', $user->id)->first();
+
+        $employees = collect();
+        if ($department) {
+            $employees = User::where('department_id', $department->id)
+                ->whereHas('roles', function ($q) {
+                    $q->where('name', 'Employee');
+                })
+                ->get();
+        }
+
+        return view('Admin.employee.index', compact('employees'));
+    }
+
+
+    public function show_employee($id) 
+    {
+       try {
+           $user = auth()->user();
+           $department = Department::where('user_id', $user->id)->first();
+            
+            $employee = User::where('department_id', $department->id)
+                ->whereHas('roles', function ($q) {
+                    $q->where('name', 'Employee');
+                })->findOrFail($id);
+            return view('Admin.employee.all_date_of_employee', compact('employee'));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
+
+    //========================================== Attendences ===================================================//
+    public function get_all_present_employees()
+    {
+        $user = auth()->user();
+        $department = Department::where('user_id', $user->id)->first();
+        $employees = User::where('department_id', $department->id)
+                ->whereHas('roles', function ($q) {
+                    $q->where('name', 'Employee');
+                })
+                ->get();
+        $attendences_present = AttendenceRecords::whereIn('user_id',$employees->id)->where('status', 'present')->get();
+        return view('Admin.attendence.present', compact('attendences_present'));
+    }
+    public function get_all_absent_employees()
+    {
+        $user = auth()->user();
+        $department = Department::where('user_id', $user->id)->first();
+        $employees = User::where('department_id', $department->id)
+                ->whereHas('roles', function ($q) {
+                    $q->where('name', 'Employee');
+                })
+                ->get();
+        $attendences_absent = AttendenceRecords::whereIn('user_id',$employees->id)->where('status', 'absent')->get();
+        return view('Admin.attendence.absent', compact('attendences_absent'));
+    }
+    public function get_all_lats_employees()
+    {
+        $user = auth()->user();
+        $department = Department::where('user_id', $user->id)->first();
+        $employees = User::where('department_id', $department->id)
+                ->whereHas('roles', function ($q) {
+                    $q->where('name', 'Employee');
+                })
+                ->get();
+        $attendences_late = AttendenceRecords::whereIn('user_id',$employees->id)->where('status', 'late')->get();
+        return view('Admin.attendence.late', compact('attendences_late'));
+    }
+
+    public function report($request)
+    {
+        $attendances = AttendenceRecords::with('employee')
+            ->orderBy('date', 'DESC')
+            ->paginate(20);
+
+        return view('Admin.attendence.report', compact('attendances'));
+    }
+
+    public function export()
+    {
+        return Excel::download(new AttendanceExport, 'attendance.xlsx');
+    }
+
+
+}

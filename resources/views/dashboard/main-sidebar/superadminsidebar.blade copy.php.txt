@@ -1,0 +1,224 @@
+<style>
+    .app-sidebar {
+        background: #1e293b;
+        color: #e2e8f0;
+        font-family: 'Cairo', sans-serif;
+        width: 260px;
+        transition: all 0.3s;
+    }
+
+    .main-menu {
+        padding: 15px 0;
+    }
+
+    .slide {
+        margin-bottom: 6px;
+    }
+
+    /* العنصر الأب (اللي فيه سهم) */
+    .side-menu__item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 20px;
+        color: #cbd5e1;
+        font-weight: 500;
+        border-radius: 10px;
+        margin: 0 15px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .side-menu__item:hover {
+        background-color: #334155;
+        color: #fff;
+    }
+
+    .slide.has-sub.open > .side-menu__item {
+        background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        color: white;
+        box-shadow: 0 6px 15px rgba(59, 130, 246, 0.35);
+    }
+
+    .side-menu__label {
+        flex: 1;
+        text-align: right; /* عشان النص يبقى في النص والأيقونة والسهم على الجنب */
+        padding-left: 12px;
+    }
+
+    .side-menu__icon {
+        font-size: 21px;
+    }
+
+    .side-menu__angle {
+        font-size: 18px;
+        transition: transform 0.35s ease;
+        margin-left: 10px;
+    }
+
+    /* دوران السهم لما تفتح القايمة */
+    .slide.has-sub.open .side-menu__angle {
+        transform: rotate(90deg);
+    }
+
+    /* الـ Dropdown */
+    .slide-menu {
+        max-height: 0;
+        overflow: hidden;
+        padding: 0 20px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 10px;
+        margin: 6px 25px 12px;
+        transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+        opacity: 0;
+        border-right: 4px solid #3b82f6;
+    }
+
+    .slide.has-sub.open .slide-menu {
+        max-height: 500px;
+        padding: 12px 20px;
+        opacity: 1;
+    }
+
+    .slide-item {
+        display: block;
+        padding: 11px 18px;
+        color: #94a3b8;
+        font-size: 14.5px;
+        border-radius: 8px;
+        margin-bottom: 6px;
+        transition: all 0.25s ease;
+        text-align: right;
+    }
+
+    .slide-item:hover {
+        background-color: #334155;
+        color: #fff;
+        padding-right: 25px;
+    }
+
+    .slide-item.active {
+        background-color: #3b82f6;
+        color: white;
+        font-weight: 600;
+    }
+</style>
+
+<aside class="app-sidebar sticky" id="sidebar">
+    <div class="main-sidebar-header p-3 text-center">
+        <a href="#">
+            <img src="{{ asset('assets/images/brand-logos/aitect.jpeg') }}" alt="logo" class="desktop-logo" style="height:50px;" />
+        </a>
+    </div>
+
+    <div class="main-sidebar">
+        <nav class="main-menu-container nav nav-pills flex-column">
+            <ul class="main-menu">
+
+                <!-- Dashboard -->
+                <li class="slide">
+                    <a href="#" class="side-menu__item">
+                        <i class="las la-tachometer-alt side-menu__icon"></i>
+                        <span class="side-menu__label">{{ trans('words.dashboard') }}</span>
+                    </a>
+                </li>
+
+                <!-- Employees -->
+                <li class="slide has-sub">
+                    <a href="javascript:void(0);" class="side-menu__item">
+                        <i class="las la-user-tie side-menu__icon"></i>
+                        <span class="side-menu__label">{{ trans('words.employees') }}</span>
+                        <i class="fe fe-chevron-left side-menu__angle"></i>
+                    </a>
+                    <ul class="slide-menu">
+                        <li><a href="#" class="slide-item">{{ trans('words.add_employee') }}</a></li>
+                        <li><a href="#" class="slide-item">{{ trans('words.all_employees') }}</a></li>
+                    </ul>
+                </li>
+
+                <!-- Departments -->
+                <li class="slide has-sub">
+                    <a href="javascript:void(0);" class="side-menu__item">
+                        <i class="las la-building side-menu__icon"></i>
+                        <span class="side-menu__label">{{ trans('words.departments') }}</span>
+                        <i class="fe fe-chevron-left side-menu__angle"></i>
+                    </a>
+                    <ul class="slide-menu">
+                        <li><a href="#" class="slide-item">{{ trans('words.add_department') }}</a></li>
+                        <li><a href="#" class="slide-item">{{ trans('words.all_departments') }}</a></li>
+                    </ul>
+                </li>
+
+                <!-- Attendance -->
+                <li class="slide has-sub">
+                    <a href="javascript:void(0);" class="side-menu__item">
+                        <i class="las la-calendar-check side-menu__icon"></i>
+                        <span class="side-menu__label">{{ trans('words.attendance') }}</span>
+                        <i class="fe fe-chevron-left side-menu__angle"></i>
+                    </a>
+                    <ul class="slide-menu">
+                        <li><a href="#" class="slide-item">{{ trans('words.attendance_report') }}</a></li>
+                        <li><a href="#" class="slide-item">{{ trans('words.attendance_summary') }}</a></li>
+                    </ul>
+                </li>
+
+                <!-- Leaves -->
+                <li class="slide has-sub">
+                    <a href="javascript:void(0);" class="side-menu__item">
+                        <i class="las la-plane-departure side-menu__icon"></i>
+                        <span class="side-menu__label">{{ trans('words.leaves') }}</span>
+                        <i class="fe fe-chevron-left side-menu__angle"></i>
+                    </a>
+                    <ul class="slide-menu">
+                        <li><a href="#" class="slide-item">{{ trans('words.all_leaves') }}</a></li>
+                        <li><a href="#" class="slide-item">{{ trans('words.add_leave') }}</a></li>
+                    </ul>
+                </li>
+
+                <!-- Payroll -->
+                <li class="slide has-sub">
+                    <a href="javascript:void(0);" class="side-menu__item">
+                        <i class="las la-money-bill-wave side-menu__icon"></i>
+                        <span class="side-menu__label">{{ trans('words.payroll_salary') }}</span>
+                        <i class="fe fe-chevron-left side-menu__angle"></i>
+                    </a>
+                    <ul class="slide-menu">
+                        <li><a href="#" class="slide-item">{{ trans('words.payroll_report') }}</a></li>
+                        <li><a href="#" class="slide-item">{{ trans('words.generate_salary') }}</a></li>
+                    </ul>
+                </li>
+
+                <!-- Users & Roles -->
+                <li class="slide has-sub">
+                    <a href="javascript:void(0);" class="side-menu__item">
+                        <i class="las la-users-cog side-menu__icon"></i>
+                        <span class="side-menu__label">{{ trans('words.users_roles') }}</span>
+                        <i class="fe fe-chevron-left side-menu__angle"></i>
+                    </a>
+                    <ul class="slide-menu">
+                        <li><a href="#" class="slide-item">{{ trans('words.all_users') }}</a></li>
+                        <li><a href="#" class="slide-item">{{ trans('words.add_user') }}</a></li>
+                        <li><a href="#" class="slide-item">{{ trans('words.roles') }}</a></li>
+                        <li><a href="#" class="slide-item">{{ trans('words.permissions') }}</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </nav>
+    </div>
+</aside>
+
+<script>
+    document.querySelectorAll('.slide.has-sub > a').forEach(item => {
+    item.addEventListener('click', function(e) {
+        e.preventDefault(); // منع الرابط الافتراضي
+        const parent = this.parentElement;
+        // إغلاق أي قائمة مفتوحة
+        document.querySelectorAll('.slide.has-sub.open').forEach(el => {
+            if(el !== parent) el.classList.remove('open');
+        });
+        // فتح/إغلاق القائمة الحالية
+        parent.classList.toggle('open');
+    });
+});
+</script>

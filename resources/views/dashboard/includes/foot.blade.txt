@@ -1,0 +1,284 @@
+</div>
+<div class="scrollToTop">
+    <span class="arrow"><i class="ri-arrow-up-s-fill fs-20"></i></span>
+</div>
+<div id="responsive-overlay"></div>
+<script>
+src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js" >
+</script>
+<script src="{{ asset('/assets/js/quill-editor.js') }}"></script>
+<script src="{{ asset('assets/libs/@popperjs/core/umd/popper.min.js')}}"></script>
+<script src="{{ asset('assets/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{ asset('assets/js/defaultmenu.min.js')}}"></script>
+<script src="{{ asset('assets/libs/node-waves/waves.min.js')}}"></script>
+<script src="{{ asset('assets/js/sticky.js')}}"></script>
+<script src="{{ asset('assets/libs/simplebar/simplebar.min.js')}}"></script>
+<script src="{{ asset('assets/js/simplebar.js')}}"></script>
+<script src="{{ asset('assets/libs/@simonwep/pickr/pickr.es5.min.js')}}"></script>
+<script src="{{ asset('assets/js/custom-switcher.min.js')}}"></script>
+<script src="{{ asset('assets/libs/data-tabels/jquery-3.6.1.min.js')}}"></script>
+<script src="{{ asset('assets/libs/data-tabels/jquery.dataTables.min.js')}}"></script>
+<script src="{{ asset('assets/libs/data-tabels/dataTables.bootstrap5.min.js')}}"></script>
+<script src="{{ asset('assets/libs/data-tabels/dataTables.responsive.min.js')}}"></script>
+<script src="{{ asset('assets/libs/data-tabels/dataTables.buttons.min.js')}}"></script>
+<script src="{{ asset('assets/libs/data-tabels/buttons.print.min.js')}}"></script>
+<script src="{{ asset('assets/libs/data-tabels/ajax_libs_pdfmake_0.2.6_pdfmake.min.js')}}"></script>
+<script src="{{ asset('assets/libs/data-tabels/ajax_libs_pdfmake_0.1.53_vfs_fonts.js')}}"></script>
+<script src="{{ asset('assets/libs/data-tabels/js_buttons.html5.min.js')}}"></script>
+<script src="{{ asset('assets/libs/data-tabels/ajax_libs_jszip_3.10.1_jszip.min.js')}}"></script>
+<script src="{{ asset('assets/libs/data-tabels/')}}"></script>
+<script src="{{ asset('assets/js/datatables.js')}}"></script>
+<script src="{{ asset('assets/js/product-list.js')}}"></script>
+<script src="{{ asset('assets/libs/sweetalert2/sweetalert2.min.js')}}"></script>
+<script src="{{ asset('assets/js/sweet-alerts.js')}}"></script>
+<script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js')}}"></script>
+<script src="{{ asset('assets/js/apexcharts-heatmap.js')}}"></script>
+<script src="{{ asset('assets/js/dataseries.js')}}"></script>
+<script src="{{ asset('assets/js/apexcharts-stock-prices.js')}}"></script>
+<script src="{{ asset('assets/js/apex-github-data.js')}}"></script>
+<script src="{{ asset('assets/js/apexcharts-irregulardata.js')}}"></script>
+<script src="{{ asset('assets/libs/moment/moment.js')}}"></script>
+<script src="{{ asset('assets/js/apexcharts-area.js')}}"></script>
+<script src="{{ asset('assets/js/hrm-dashboard.js')}}"></script>
+<script src="{{ asset('assets/js/personal-dashboard.js')}}"></script>
+<script src="{{ asset('assets/js/custom-switcher.min.js')}}"></script>
+<script src="{{ asset('assets/js/custom.js')}}"></script>
+<script src="{{ asset('assets/js/date&time_pickers.js')}}"></script>
+<script src="{{ asset('assets/libs/filepond/filepond.min.js')}}"></script>
+<script src="{{ asset('assets/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.js')}}"></script>
+<script
+    src="{{ asset('assets/libs/filepond-plugin-image-exif-orientation/filepond-plugin-image-exif-orientation.min.js')}}">
+</script>
+<script src="{{ asset('assets/libs/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.min.js')}}">
+</script>
+<script src="{{ asset('assets/libs/filepond-plugin-file-encode/filepond-plugin-file-encode.min.js')}}"></script>
+<script src="{{ asset('assets/libs/filepond-plugin-image-edit/filepond-plugin-image-edit.min.js')}}"></script>
+<script src="{{ asset('assets/libs/filepond-plugin-file-validate-type/filepond-plugin-file-validate-type.min.js')}}">
+</script>
+<script src="{{ asset('assets/libs/filepond-plugin-file-validate-type/filepond-plugin-file-validate-type.min.js')}}">
+</script>
+<script src="{{ asset('assets/libs/filepond-plugin-image-crop/filepond-plugin-image-crop.min.js')}}"></script>
+<script src="{{ asset('assets/libs/filepond-plugin-image-resize/filepond-plugin-image-resize.min.js')}}"></script>
+<script src="{{ asset('assets/libs/filepond-plugin-image-transform/filepond-plugin-image-transform.min.js')}}"></script>
+<script src="{{ asset('assets/libs/dropzone/dropzone-min.js')}}"></script>
+<script src="{{ asset('assets/js/fileupload.js')}}"></script>
+<script src="{{ asset('assets/js/datatables.js')}}"></script>
+<script src="{{ asset('assets/js/product-list.js')}}"></script>
+<script src="{{ asset('assets/libs/sweetalert2/sweetalert2.min.js')}}"></script>
+<script src="{{ asset('assets/js/sweet-alerts.js')}}"></script>
+<script src="{{ asset('assets/libs/flatpickr/flatpickr.min.js')}}"></script>
+<script src="{{ asset('assets/js/date&time_pickers.js')}}"></script>
+<script src="{{ asset('assets/libs/choices-js/public/assets/scripts/choices.min.js')}}"></script>
+<script src="{{ asset('assets/js/choices.js')}}"></script>
+<script src="{{ asset('assets/js/custom-switcher.min.js')}}"></script>
+<script src="{{ asset('assets/js/custom.js')}}"></script>
+<script src="{{ asset('/assets/js/editor.js') }}"></script>
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+<!--  -->
+
+<script>
+const quill = new Quill('#editor', {
+        modules: {
+            syntax: true,
+            toolbar: '#toolbar-container',
+        },
+        placeholder: 'Enter your message here...',
+        theme: 'snow',
+    });
+document.querySelector('form').addEventListener('submit', function(event) {
+
+
+    console.log(
+        'cintent value' , quill.innerHTML
+    );
+    
+
+    var content = document.querySelector('#content');
+
+
+    content.value = quill.root.innerHTML;
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+<script>
+
+$(document).ready(function() {
+    $('.select2-multi').select2({
+        placeholder: "Select options",
+        allowClear: true
+    });
+
+    document.getElementById('clearSearch').addEventListener('click', function () {
+    document.getElementById('searchInput').value = '';
+    window.location.href = "{{ route('home.index') }}";
+});
+
+    $("#searchInput").on("keyup", function() {
+        $("#hiddenSearch").val($(this).val());
+        var value = $(this).val().toLowerCase();
+        $("#file-export tbody tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().includes(value));
+        });
+    });
+
+    $("#clearSearch").click(function() {
+        $("#searchInput").val('');
+        $("#hiddenSearch").val('');
+        $("#file-export tbody tr").show();
+    });
+    $(".delete-button").click(function() {
+        let itemId = $(this).data("id");
+        $("#deleteForm" + itemId).attr("action", "{{ route('home.destroy', '') }}/" + itemId);
+    });
+$("#categories").on('change', function() {
+    var selectedCategories = $(this).val() || [];
+    if (selectedCategories.length > 0) {
+        $("#subcategory_container").show();
+        $("#subcategories").val(null).trigger('change.select2');
+        $("#subcategories option").prop('disabled', true);
+        $("#subcategories option").each(function() {
+            if ($(this).val() === "all") {
+                $(this).prop('disabled', false);
+            } else {
+                var subcategoryCategoryId = $(this).data("category");
+                if (selectedCategories.includes(subcategoryCategoryId.toString())) {
+                    $(this).prop('disabled', false);
+                }
+            }
+        });
+        $("#subcategories").select2('destroy').select2({
+            placeholder: "Select subcategories",
+            allowClear: true
+        });
+
+    } else {
+        $("#subcategory_container").hide();
+        $("#subcategories").val(null);
+    }
+});
+    $("#categories").trigger("change");
+    @if(request('categories'))
+    $("#subcategory_container").show();
+    @endif
+});
+</script>
+
+
+<!-----------------------------the js of home blade footer script------------------------------------------>
+<script>
+function toggleDeleteButton() {
+    let anyChecked = $(".box1:checked").length > 0;
+    if (anyChecked) {
+        $("#btn_delete_all").prop("disabled", false);
+        $("#btn_send_all").prop("disabled", false);  
+        $("#download_all").prop("disabled", false);  
+        
+    } else {
+        $("#btn_delete_all").prop("disabled", true);
+        $("#btn_send_all").prop("disabled", true);  
+        $("#download_all").prop("disabled", true);  
+    }
+}
+$(".box1").on("change", function() {
+    toggleDeleteButton();
+});
+toggleDeleteButton();
+$("#btn_delete_all").click(function() {
+    var selected = new Array();
+    $(".box1:checked").each(function() {
+        selected.push(this.value);
+    });
+
+    if (selected.length > 0) {
+        $('#delete_all').modal('show');
+        $('input[id="delete_all_id"]').val(selected);
+    }
+});
+
+toggleDeleteButton();
+$("#download_all").click(function() {
+    var selected = new Array();
+    $(".box1:checked").each(function() {
+        selected.push(this.value);
+    });
+
+    if (selected.length > 0) {
+        $('#download_data_all').modal('show');
+        $('input[id="download_all_data"]').val(selected);
+    }
+});
+document.addEventListener("DOMContentLoaded", function () {
+        let checkboxes = document.querySelectorAll(".box1");
+        let selectAllCheckbox = document.getElementById("example-select-all");
+        let sendButton = document.getElementById("btn_send_all");
+        let selectedIds = [];
+        function updateSelectedIds() {
+            selectedIds = Array.from(checkboxes)
+                .filter(i => i.checked)
+                .map(i => i.value);
+            
+            sendButton.disabled = selectedIds.length === 0;
+        }
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener("change", function () {
+                updateSelectedIds();
+            });
+        });
+        selectAllCheckbox.addEventListener("change", function () {
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = selectAllCheckbox.checked;
+            });
+            updateSelectedIds();
+        });
+        sendButton.addEventListener("click", function () {
+            if (selectedIds.length > 0) {
+                document.getElementById("send_email_ids").value = selectedIds.join(",");
+                let sendEmailModal = new bootstrap.Modal(document.getElementById("send_email"));
+                sendEmailModal.show();
+            }
+        });
+    });
+$("#example-select-all").on("change", function() {
+    var isChecked = $(this).prop("checked");
+    $(".box1").prop("checked", isChecked);
+    toggleDeleteButton();
+});
+</script>
+
+<script>
+$(document).ready(function() {
+    $('#subcategory option').hide();
+    $('#category_id').on('change', function() {
+        var categoryId = $(this).val();
+        $('#subcategory option').hide();
+        $('#subcategory').val('');
+        for (i = 0; i < categoryId.length; i++) {
+            $("#subcategory option[value=" + categoryId[i] + "]").show();
+        }
+    });
+});
+
+$(document).ready(function() {
+    $('#email option').hide();
+    $('#name').on('change', function() {
+        var senderId = $(this).val();
+        $('#email option').hide();
+        $('#email').val('');
+        for (i = 0; i < senderId.length; i++) {
+            $("#email option[value=" + senderId[i] + "]").show();
+        }
+    });
+});
+</script>
+
+<!-----------------------------the End js of home blade footer script------------------------------------------>
+
+@yield('js')
+
+</body>
+
+</html>

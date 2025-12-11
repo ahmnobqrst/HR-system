@@ -1,0 +1,76 @@
+@extends('dashboard.includes.master')
+
+@section('content')
+
+    <!-- Page Header Close -->
+
+    <div class="page-content">
+        <div class="row">
+            <div class="card custom-card">
+                <div class="card-header justify-content-between">
+                    <div class="card-title">الحضور والانصراف</div>
+                </div>
+
+                <div class="card-body">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link active" id="nav-example-tab" data-bs-toggle="tab" data-bs-target="#nav-example" type="button" role="tab">يناير 2025</button>
+                            <!-- يمكنك إضافة تبويبات أخرى يدويًا إذا أردت -->
+                        </div>
+                    </nav>
+
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-example" role="tabpanel" aria-labelledby="nav-example-tab">
+
+                            <table class="table table-bordered text-nowrap" style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">التاريخ</th>
+                                        <th scope="col">حالة الموظف</th>
+                                        <th scope="col">اسم اليوم</th>
+                                        <th scope="col">نوع اليوم</th>
+                                        <th scope="col">وقت الحضور</th>
+                                        <th scope="col">وقت الانصراف</th>
+                                        <th scope="col">ساعات العمل</th>
+                                        <th scope="col">الأوفر تايم</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- مثال على صف واحد فقط -->
+                                    <tr>
+                                        <td>2025-01-15</td>
+                                        <td>
+                                            <span class="text-success">
+                                                <i class="ri-check-double-fill text-success"></i>
+                                                حاضر
+                                            </span>
+                                        </td>
+                                        <td>الأربعاء</td>
+                                        <td>يوم عمل عادي</td>
+                                        <td>08:30 ص</td>
+                                        <td>05:15 م</td>
+                                        <td>8 ساعات و 45 دقيقة</td>
+                                        <td>45 دقيقة</td>
+                                    </tr>
+
+                                    <!-- يمكنك تكرار الصفوف يدويًا حسب الحاجة -->
+
+                                    <tr>
+                                        <td colspan="4" class="text-center fw-bold">
+                                            إجمالي الساعات: 168 ساعة
+                                        </td>
+                                        <td colspan="4" class="text-center fw-bold">
+                                            إجمالي الأوفر تايم: 12 ساعة و 30 دقيقة
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@endsection

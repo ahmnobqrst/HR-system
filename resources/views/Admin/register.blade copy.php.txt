@@ -1,0 +1,111 @@
+@extends('dashboard.includes.master')
+
+@section('content')
+
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+
+    <div class="bg-purple-600 text-white p-4 rounded">
+        <span>{{ __('تصاريح هذا الشهر') }}</span>
+        <h2>1</h2>
+    </div>
+
+    <div class="bg-red-500 text-white p-4 rounded">
+        <span>{{ __('إجمالي الغيابات في الشهر') }}</span>
+        <h2>0</h2>
+    </div>
+
+    <div class="bg-yellow-500 text-white p-4 rounded">
+        <span>{{ __('إجمالي التأخيرات في الشهر') }}</span>
+        <h2>1</h2>
+    </div>
+
+    <div class="bg-green-600 text-white p-4 rounded">
+        <span>{{ __('إجمالي الحضور في الشهر') }}</span>
+        <h2>2</h2>
+    </div>
+
+</div>
+
+
+<div class="bg-white shadow rounded p-6">
+
+    <table class="min-w-full text-center">
+        <thead>
+        <tr>
+            @foreach(['الأحد','السبت','الجمعة','الخميس','الأربعاء','الثلاثاء','الاثنين'] as $day)
+                <th>{{ $day }}</th>
+            @endforeach
+        </tr>
+        </thead>
+
+        <tbody>
+
+        @php
+            $monthDays = now()->daysInMonth;
+            $start = now()->startOfMonth();
+        @endphp
+
+        @for($week=0;$week<6;$week++)
+        <tr>
+
+            @for($day=0;$day<7;$day++)
+                @php
+                    $date = $start->copy()->addDays($week*7+$day - $start->dayOfWeek);
+                @endphp
+
+                @if($date->month == now()->month)
+                    @php
+                        $rec = $records[$date->toDateString()] ?? null;
+                        $status = 'غياب';
+                        $color = 'text-gray-500';
+
+                        if($rec){
+                            if(!$rec->checkIn) {$status='غياب'; $color='text-gray-500';}
+                            elseif($rec->checkIn > $date->copy()->setTime(9,0)) {$status='متأخر'; $color='text-yellow-600';}
+                            else {$status='حاضر'; $color='text-green-600';}
+                        }
+
+                        $isToday = $date->isToday();
+                    @endphp
+
+                    <td class="@if($isToday) border-2 border-blue-600 @endif p-2">
+                        <div>{{ $date->format('Y-m-d') }}</div>
+                        <div class="{{ $color }}">{{ $status }}</div>
+                    </td>
+                @else
+                    <td class="bg-gray-200"></td>
+                @endif
+
+            @endfor
+
+        </tr>
+        @endfor
+
+        </tbody>
+    </table>
+
+</div>
+
+
+<div class="bg-white shadow rounded p-6 mt-6 text-center">
+
+    @if(!$todayRecord)
+        <form action="{{route('admin.attendance.checkin')}}" method="POST">
+            @csrf
+            <button class="btn btn-primary">
+                {{ __('تسجيل الحضور') }}
+            </button>
+        </form>
+    @elseif($todayRecord && !$todayRecord->checkOut)
+        <form action="{{route('admin.attendance.checkout')}}" method="POST">
+            @csrf
+            <button class="btn btn-danger">
+                {{ __('تسجيل الانصراف') }}
+            </button>
+        </form>
+    @else
+        <span>{{ __('تم تسجيل حضورك وانصرافك اليوم') }}</span>
+    @endif
+</div>
+
+@endsection

@@ -1,0 +1,60 @@
+@extends('dashboard.includes.master')
+@section('title')
+{{ trans('words.attendance_report') }}<
+@endsection
+@section('content')
+
+<form method="GET">
+
+    <select name="employee_id">
+        <option value="">{{ trans('words.all_employees') }}</option>
+        @foreach($employees as $emp)
+        <option value="{{ $emp->id }}">{{ $emp->name }}</option>
+        @endforeach
+    </select>
+
+    <select name="department_id">
+        <option value="">{{ trans('words.all_departments') }}</option>
+        @foreach($departments as $dep)
+        <option value="{{ $dep->id }}">{{ $dep->name }}</option>
+        @endforeach
+    </select>
+
+    <input type="date" name="from_date">
+    <input type="date" name="to_date">
+
+    <select name="status">
+        <option value="">{{ trans('words.all') }}</option>
+        <option value="present">{{ trans('words.present') }}</option>
+        <option value="absent">{{ trans('words.absent') }}</option>
+        <option value="late">{{ trans('words.late') }}</option>
+    </select>
+
+    <button type="submit">{{ trans('words.search') }}</button>
+    <a href="{{ route('attendance.export.excel', request()->query()) }}">
+        Export Excel
+    </a>
+</form>
+
+<table class="table">
+    <tr>
+        <th>{{ trans('words.employee') }}</th>
+        <th>{{ trans('words.department') }}</th>
+        <th>{{ trans('words.date') }}</th>
+        <th>{{ trans('words.checkIn') }}</th>
+        <th>{{ trans('words.checkOut') }}</th>
+        <th>{{ trans('words.status') }}</th>
+    </tr>
+
+    @foreach($items as $item)
+    <tr>
+        <td>{{ $item->user->name }}</td>
+        <td>{{ $item->user->department->name ?? '' }}</td>
+        <td>{{ $item->date }}</td>
+        <td>{{ $item->checkIn }}</td>
+        <td>{{ $item->checkOut }}</td>
+        <td>{{ $item->status }}</td>
+    </tr>
+    @endforeach
+</table>
+@endsection

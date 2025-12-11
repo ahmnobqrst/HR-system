@@ -1,0 +1,273 @@
+@extends('dashboard.includes.master')
+@push('css')
+    <style>
+        .scrollable {
+            height: 70vh;
+            overflow: auto;
+        }
+
+        .present {
+            color: green;
+        }
+
+        .late {
+            color: #ef8e0f;
+        }
+
+        .absent {
+            color: red;
+        }
+
+        .table.fs-11 td {
+            font-size: 11px !important;
+            position: relative;
+        }
+
+        td.today {
+            border: 8px solid #0b5ed7;
+            border-width: medium;
+            position: relative;
+        }
+
+        td.disabled {
+            background: #cccccc;
+        }
+
+        span.mark-today {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #0d6efd;
+            color: #fff;
+            padding: 2px 5px;
+            font-size: 7px;
+            border-radius: 0 0 5px;
+            user-select: none;
+        }
+
+        .holiday_icon {
+            width: 25px;
+            position: absolute;
+            left: 0;
+        }
+        @media screen and (max-width:767px){
+            .holiday_icon {
+                width: 12px;
+            }
+            .table.fs-11 td {
+                font-size: 8px !important;
+            }
+            .table td, .table th {
+                padding: 5px;
+            }
+
+            .btn {
+                font-size: 16px !important;
+                padding: 6px!important;
+            }
+
+            h5 {
+                font-size: 18px!important;
+                margin-bottom: 0 !important;
+            }
+        }
+
+        td .holiday_discription {
+            position: absolute;
+            background: #fff;
+            padding: 10px;
+            z-index: 9;
+            left: 25px;
+            font-size: 12px;
+            border-radius: 5px;
+            display: none;
+        }
+        td .holiday_icon:hover + .holiday_discription{
+            display:block;
+            top: 2px;
+        }
+    </style>
+@endpush
+
+@section('content')
+
+    <!-- Start::row-1 -->
+    <div class="row">
+        <div class="col-xl-3 col-md-6">
+            <div class="card custom-card card-bg-success">
+                <div class="card-body">
+                    <div class="d-flex align-items-center w-100">
+                        <div class="me-2">
+                            <span class="avatar avatar-rounded">
+                                <i class="ri-user-2-fill text-white fs-40"></i>
+                            </span>
+                        </div>
+                        <div class="">
+                            <div class="fs-15 fw-semibold">22</div>
+                            <p class="mb-0 text-fixed-white op-7 fs-12">إجمالي الحضور هذا الشهر</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card custom-card card-bg-warning">
+                <div class="card-body">
+                    <div class="d-flex align-items-center w-100">
+                        <div class="me-2">
+                            <span class="avatar avatar-rounded">
+                                <i class="ri-time-fill text-white fs-40"></i>
+                            </span>
+                        </div>
+                        <div class="">
+                            <div class="fs-15 fw-semibold">3</div>
+                            <p class="mb-0 text-fixed-white op-7 fs-12">إجمالي التأخير هذا الشهر</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card custom-card card-bg-danger">
+                <div class="card-body">
+                    <div class="d-flex align-items-center w-100">
+                        <div class="me-2">
+                            <span class="avatar avatar-rounded">
+                                <i class="ri-user-unfollow-fill text-white fs-40"></i>
+                            </span>
+                        </div>
+                        <div class="">
+                            <div class="fs-15 fw-semibold">1</div>
+                            <p class="mb-0 text-fixed-white op-7 fs-12">إجمالي الغياب هذا الشهر</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4 col-md-12 col-sm-12">
+            <div class="card custom-card text-center">
+                <div class="card-header">
+                    <div class="card-title">تسجيل الحضور والانصراف</div>
+                </div>
+                <div class="card-body">
+                    <img src="https://via.placeholder.com/140x140?text=شكراً" style="height: 140px; width: auto;" alt="">
+                    <h6>تم تسجيل حضورك اليوم</h6>
+                    <p class="h4 text-success text-center"><i class="bx bx-check fa-4x"></i> تم التسجيل</p>
+                    <button class="btn btn-success" disabled>تسجيل الانصراف</button>
+                </div>
+                <div class="card-footer">
+                    إجمالي ساعات العمل اليوم: 8 ساعات و 15 دقيقة
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-bordered text-center fs-11">
+                        <thead>
+                            <tr>
+                                <td>الأحد</td>
+                                <td>الإثنين</td>
+                                <td>الثلاثاء</td>
+                                <td>الأربعاء</td>
+                                <td>الخميس</td>
+                                <td>الجمعة</td>
+                                <td>السبت</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td class="today"><span class="mark-today">اليوم</span>10<br><span class="present">حاضر</span></td>
+                                <td>11</td>
+                                <td>12</td>
+                                <td>13</td>
+                            </tr>
+                            <tr>
+                                <td>14<br><span class="present">حاضر</span></td>
+                                <td>15<br><span class="late">متأخر</span></td>
+                                <td>16<br><span class="present">حاضر</span></td>
+                                <td>17</td>
+                                <td>18</td>
+                                <td>19</td>
+                                <td>20</td>
+                            </tr>
+                            <tr>
+                                <td>21</td>
+                                <td>22</td>
+                                <td>23</td>
+                                <td>24</td>
+                                <td>25</td>
+                                <td>26</td>
+                                <td>27</td>
+                            </tr>
+                            <tr>
+                                <td>28</td>
+                                <td>29</td>
+                                <td>30</td>
+                                <td>31</td>
+                                <td class="disabled">1</td>
+                                <td class="disabled">2</td>
+                                <td class="disabled">3</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- باقي الأقسام (شكاوى، مهام، إلخ) محذوفة لأنها كانت تعتمد على متغيرات -->
+    <!-- لو عايزها برضو ثابتة قول لي وأضيفها بنفس الطريقة -->
+
+@endsection
+
+@push('js')
+    <script>
+        $(document).ready(function () {
+            function timeConversion(s) {
+                var time = s.toLowerCase().split(':');
+                var hours = parseInt(time[0]);
+                var _ampm = time[2];
+                if (_ampm.indexOf('am') != -1 && hours == 12) time[0] = '00';
+                if (_ampm.indexOf('pm') != -1 && hours < 12) time[0] = hours + 12;
+                return time.join(':').replace(/(am|pm)/, '');
+            }
+
+            const now = new Date();
+            let currentDateTime = now.toLocaleString('ar-EG');
+            let date = currentDateTime.slice(0, currentDateTime.search(','));
+            let time = currentDateTime.slice(currentDateTime.search(',') + 1).trim();
+
+            $('#time').html('<h5>' + date + '</h5><h6>' + time + '</h6>');
+
+            function updateDateTime() {
+                const now = new Date();
+                currentDateTime = now.toLocaleString('ar-EG');
+                date = currentDateTime.slice(0, currentDateTime.search(','));
+                time = currentDateTime.slice(currentDateTime.search(',') + 1).trim();
+                $('#time').html('<h5>' + date + '</h5><h6>' + time + '</h6>');
+            }
+
+            setInterval(updateDateTime, 1000);
+        });
+    </script>
+@endpush
