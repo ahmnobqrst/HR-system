@@ -171,7 +171,7 @@ Route::group([
 
 
             //================================== Attenedence Employee ======================================//
-             Route::get('/attendance-history', [EmployeeController::class, 'attendance_employee_history'])->name('employee.attendance.history');
+            //  Route::get('/attendance-history', [EmployeeController::class, 'attendance_employee_history'])->name('employee.attendance.history');
             //================================== End Register Attenedence Route ========================================================//
 
             //=============================== Leaves Routes =============================================================//

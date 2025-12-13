@@ -34,9 +34,9 @@
                 <td>{{ $key + 1 }}</td>
                 <td>{{ $att->employee->name }}</td>
                 <td>{{ $att->employee->phone }}</td>
-                <td>{{ $att->date }}</td>
-                <td>{{ $att->check_in }}</td>
-                <td>{{ $att->check_out }}</td>
+                <td>{{ \Carbon\Carbon::parse($att->date)->format('Y-m-d') }}</td>
+                <td>{{ \Carbon\Carbon::parse($att->checkIn)->format('H:i') }}</td>
+               <td>{{ \Carbon\Carbon::parse($att->checkOut)->format('H:i') }}</td>
                 <td>{{ $att->status }}</td>
             </tr>
             @endforeach

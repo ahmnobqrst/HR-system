@@ -31,7 +31,7 @@
                 <!-- أزرار الشهور -->
                 <div class="mb-3">
                     @foreach($availableMonths as $m)
-                        <a href="{{ route('admin.attendance.history', ['month' => $m['month'], 'year' => $m['year']]) }}"
+                        <a href="{{ route('employee.attendance.history', ['month' => $m['month'], 'year' => $m['year']]) }}"
                            class="btn btn-outline-primary month-btn {{ ($month == $m['month'] && $year == $m['year']) ? 'active' : '' }}">
                            {{ $m['label'] }}
                         </a>

@@ -19,8 +19,8 @@ class AttendenceRecords extends Model
     'date' => 'date',
 ];
 
-    public function user()
+    public function employee()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'user_id');
     }
 }
