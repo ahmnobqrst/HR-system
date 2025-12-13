@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Enum\GenderEnum;
+use Illuminate\Validation\Rule;
 
 class EmployeeRequest extends FormRequest
 {
@@ -25,7 +27,10 @@ class EmployeeRequest extends FormRequest
 
             'phone'                 => 'required|string|max:20',
             'age'                   => 'required|integer|min:18|max:100',
-            'gender'                => 'required|in:male,female',
+            'gender' => [
+                'required',
+                Rule::in(array_column(GenderEnum::cases(), 'value')),
+            ],
 
             'job_title_ar'          => 'required|string|max:255',
             'job_title_en'          => 'required|string|max:255',

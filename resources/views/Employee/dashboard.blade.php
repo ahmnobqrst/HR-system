@@ -81,7 +81,7 @@
                 <span class="avatar avatar-rounded me-2"><i class="ri-user-unfollow-fill text-white fs-40"></i></span>
                 <div>
                     <div class="fs-15 fw-semibold">
-                        {{ $daysInMonth - $records->count() }}
+                        {{ $records->where('status','absent')->count() }}
                     </div>
                     <p class="mb-0 text-fixed-white op-7 fs-12">{{ __('attendance.total_absent') }}</p>
                 </div>

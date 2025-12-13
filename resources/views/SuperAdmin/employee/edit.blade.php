@@ -124,8 +124,15 @@
                 <div class="col-md-6 mb-3">
                     <label>{{ __('words.gender') }}</label>
                     <select class="form-control" name="gender">
-                        <option value="male" {{ $employee->gender == 'male' ? 'selected' : '' }}>{{ __('words.male') }}</option>
-                        <option value="female" {{ $employee->gender == 'female' ? 'selected' : '' }}>{{ __('words.female') }}</option>
+                        <option value="{{ \App\Enum\GenderEnum::Male->value }}"
+                            {{ $employee->gender == \App\Enum\GenderEnum::Male->value ? 'selected' : '' }}>
+                            {{ __('words.male') }}
+                        </option>
+
+                        <option value="{{ \App\Enum\GenderEnum::Female->value }}"
+                            {{ $employee->gender == \App\Enum\GenderEnum::Female->value ? 'selected' : '' }}>
+                            {{ __('words.female') }}
+                        </option>
                     </select>
                 </div>
                 @error('gender')
@@ -203,7 +210,7 @@
                     <label>{{ __('words.image') }}</label>
                     <input type="file" name="image" class="form-control">
                     @if($employee->image)
-                        <img src="{{ asset('storage/'.$employee->image) }}" alt="employee image" class="mt-2" style="height:80px;">
+                    <img src="{{ asset('storage/'.$employee->image) }}" alt="employee image" class="mt-2" style="height:80px;">
                     @endif
                 </div>
                 @error('image')

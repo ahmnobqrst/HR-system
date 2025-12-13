@@ -89,7 +89,7 @@
                     <option value="">{{ __('words.select_user') }}</option>
 
                     @foreach($admins as $admin)
-                    <option value="{{ $admin->id }}">{{ $admin->name }}</option>
+                    <option value="{{ $admin->id }}"> {{ $admin->getTranslation('name', app()->getLocale()) }}</option>
                     @endforeach
                 </select>
             </div>
@@ -98,8 +98,7 @@
             <span class="alert alert-danger alert-dismissible">{{ $message }}</span>
             @enderror
 
-
-            <button type="submit" class="btn btn-primary">{{ __('words.create') }}</button>
+            <button type="submit" class="btn btn-primary">{{ __('words.save') }}</button>
         </form>
     </div>
 </div>

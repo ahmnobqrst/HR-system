@@ -103,7 +103,7 @@ class SuperAdminRepository implements SuperAdminInterface
             ]);
 
             toastr()->success(trans('words.department_added'));
-            return view('SuperAdmin.department.index', compact('departments'));
+            return redirect()->route('get.all.departments');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
