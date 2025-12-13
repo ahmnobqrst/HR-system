@@ -25,16 +25,21 @@ class RoleController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:roles,name',
-            'permissions' => 'array'
+            'permissions' => 'nullable|array'
         ]);
 
         $role = Role::create(['name' => $request->name]);
         if ($request->permissions) {
-            $role->syncPermissions($request->permissions);
+            $permissionNames = Permission::whereIn('id', $request->permissions)
+                ->pluck('name')
+                ->toArray();
+            $role->syncPermissions($permissionNames);
         }
 
-        return redirect()->route('roles.index')->with('success', 'Role created successfully.');
+        return redirect()->route('roles.index')
+            ->with('success', 'Role created successfully.');
     }
+
 
     public function edit(Role $role)
     {
@@ -47,18 +52,21 @@ class RoleController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:roles,name,' . $role->id,
-            'permissions' => 'array'
+            'permissions' => 'nullable|array'
         ]);
 
         $role->update(['name' => $request->name]);
-        $role->syncPermissions($request->permissions);
+
+        if ($request->permissions) {
+            $permissionNames = Permission::whereIn('id', $request->permissions)
+                ->pluck('name')
+                ->toArray();
+
+            $role->syncPermissions($permissionNames);
+        } else {
+            $role->syncPermissions([]);
+        }
 
         return redirect()->route('roles.index')->with('success', 'Role updated successfully.');
-    }
-
-    public function destroy(Role $role)
-    {
-        $role->delete();
-        return redirect()->route('roles.index')->with('success', 'Role deleted successfully.');
     }
 }
