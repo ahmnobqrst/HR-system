@@ -169,7 +169,7 @@
                 {{-- Salary --}}
                 <div class="col-md-6 mb-3">
                     <label>{{ __('words.salary') }}</label>
-                    <input type="date" name="salary" class="form-control" value="{{ $employee->salary }}">
+                    <input type="number" name="salary" class="form-control" value="{{ $employee->salary }}">
                 </div>
                 @error('salary')
                 <span class="alert alert-danger alert-dismissible">{{ $message }}</span>
