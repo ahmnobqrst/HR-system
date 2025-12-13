@@ -262,4 +262,102 @@ class EmployeeController extends Controller
         $holidays = Holiday::paginate(10);
         return view('Employee.holiday.formal-holiday', compact('holidays'));
     }
+
+
+
+    //=================================== Attendence Registeration =========================//
+     public function attendance_checkin()
+    {
+        $officialStart = today()->setTime(9, 0, 0);
+        $now = now();
+
+        $delayMinutes = $now->greaterThan($officialStart)
+            ? $officialStart->diffInMinutes($now)
+            : 0;
+        $delayHours = round($delayMinutes / 60, 2);
+
+        $status = $delayMinutes >= 30 ? 'late' : 'present';
+
+        AttendenceRecords::updateOrCreate(
+            ['user_id' => auth()->id(), 'date' => today()],
+            [
+                'checkIn' => $now,
+                'status'  => $status,
+                'delay_hours' => $delayHours
+            ]
+        );
+
+        return back();
+    }
+
+    public function attendance_checkout()
+    {
+        $record = AttendenceRecords::where('user_id', auth()->id())
+            ->whereDate('date', today())
+            ->first();
+
+        if ($record && $record->checkIn) {
+
+            $now = now();
+            $officialEnd = today()->setTime(17, 0, 0);
+            $workedMinutes = $record->checkIn->diffInMinutes($now);
+            $workedHours = round($workedMinutes / 60, 2);
+            $earlyLeaveMinutes = $now->lessThan($officialEnd)
+                ? $now->diffInMinutes($officialEnd)
+                : 0;
+            $earlyLeaveHours = round($earlyLeaveMinutes / 60, 2);
+            $overTimeMinutes = $now->greaterThan($officialEnd)
+                ? $officialEnd->diffInMinutes($now)
+                : 0;
+            $overTimeHours = round($overTimeMinutes / 60, 2);
+
+            $record->update([
+                'checkOut' => $now,
+                'worked_hours' => $workedHours,
+                'early_leave_hours' => $earlyLeaveHours,
+                'over_time' => $overTimeHours,
+            ]);
+        }
+
+        return back();
+    }
+
+
+    public function attendanceHistory(Request $request)
+    {
+        $userId = auth()->id();
+        $month = $request->input('month', now()->month);
+        $year = $request->input('year', now()->year);
+        $selectedDate = Carbon::createFromDate($year, $month, 1);
+        $attendanceRecords = AttendenceRecords::where('user_id', $userId)
+            ->whereYear('date', $year)
+            ->whereMonth('date', $month)
+            ->orderBy('date', 'desc')
+            ->get();
+
+        $totalMinutes = $attendanceRecords->sum('minutes_worked');
+        $totalHours = floor($totalMinutes / 60);
+        $availableMonths = [];
+        $startDate = Carbon::create(2025, 5, 1);
+        $endDate = Carbon::create(2025, 12, 31);
+
+        $current = $startDate->copy();
+        while ($current->lte($endDate)) {
+            $availableMonths[] = [
+                'month' => $current->month,
+                'year' => $current->year,
+                'label' => $current->format('Y-m')
+            ];
+            $current->addMonth();
+        }
+
+        return view('employee.attendance_report', compact(
+            'attendanceRecords',
+            'totalHours',
+            'selectedDate',
+            'availableMonths',
+            'month',
+            'year'
+        ));
+    }
 }

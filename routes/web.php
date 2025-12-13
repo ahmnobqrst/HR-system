@@ -195,6 +195,20 @@ Route::group([
 
             //==================================== End Employee EmployeeHolidays Routes =======================================================//
 
+
+            // ======================================= Employee Registeration Attendence ===========================================//
+
+            Route::post('attendance/checkin', [EmployeeController::class, 'attendance_checkin'])
+                ->name('employee.attendance.checkin');
+
+            Route::post('attendance/checkout', [EmployeeController::class, 'attendance_checkout'])
+                ->name('employee.attendance.checkout');
+                
+            Route::get('/attendance-history', [EmployeeController::class, 'attendanceHistory'])->name('employee.attendance.history');
+
+
+            // ====================================== End Employee Registeration Attendenec =======================================//
+
             // ================================ Profile ==============================================================//
             Route::get('employee-profile', [ProfileController::class, 'get_profile_employee'])->name('get.employee.profile');
             Route::post('update-employee-profile/{id}', [ProfileController::class, 'update_profile_employee'])->name('update.employee.profile');

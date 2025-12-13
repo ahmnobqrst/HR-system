@@ -101,7 +101,7 @@
             <div class="card-body">
 
                 @if(!$todayRecord)
-                    <form action="{{ route('admin.attendance.checkin') }}" method="POST">
+                    <form action="{{ route('employee.attendance.checkin') }}" method="POST">
                         @csrf
                         <button class="btn btn-success w-100">{{ __('attendance.check_in') }}</button>
                     </form>
@@ -110,7 +110,7 @@
                     <h6>{{ __('attendance.checked_in') }}</h6>
                     <p class="h4 text-success"><i class="bx bx-check fa-4x"></i> {{ __('attendance.completed') }}</p>
 
-                    <form action="{{ route('admin.attendance.checkout') }}" method="POST">
+                    <form action="{{ route('employee.attendance.checkout') }}" method="POST">
                         @csrf
                         <button class="btn btn-danger w-100">{{ __('attendance.check_out') }}</button>
                     </form>

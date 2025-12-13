@@ -176,7 +176,7 @@ class SuperAdminRepository implements SuperAdminInterface
                 'department_id'   => $request->department_id,
                 'work_schedule_id' => $request->work_schedule_id,
                 'image' => $image,
-                'salary'=>$request->salary,
+                'salary' => $request->salary,
 
             ]);
 
@@ -281,10 +281,17 @@ class SuperAdminRepository implements SuperAdminInterface
         return view('SuperAdmin.attendence.report', compact('attendances'));
     }
 
-    public function export()
+    public function export($request = null)
     {
-        return Excel::download(new AttendanceExport, 'attendance.xlsx');
+        $employeeIds = null;
+
+        if ($request && $request->filled('employee_ids')) {
+            $employeeIds = $request->employee_ids;
+        }
+
+        return Excel::download(new AttendanceExport($employeeIds), 'attendance.xlsx');
     }
+
     // ==================================== End Attendences ============================================//
 
 

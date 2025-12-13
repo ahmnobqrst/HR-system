@@ -10,27 +10,31 @@ class AttendanceExport implements FromCollection, WithHeadings
 {
     protected $employeeIds;
 
-    public function __construct($employeeIds)
+    // الآن $employeeIds اختياري
+    public function __construct($employeeIds = null)
     {
         $this->employeeIds = $employeeIds;
     }
 
     public function collection()
     {
-        return AttendenceRecords::with('employee')
-            ->whereIn('user_id', $this->employeeIds)
-            ->orderBy('date', 'DESC')
-            ->get()
-            ->map(function ($record) {
-                return [
-                    'Employee Name' => $record->employee->name,
-                    'Email' => $record->employee->email,
-                    'Date' => $record->date,
-                    'Status' => $record->status,
-                    'Check In' => $record->check_in,
-                    'Check Out' => $record->check_out,
-                ];
-            });
+        $query = AttendenceRecords::with('employee')->orderBy('date', 'DESC');
+
+        // إذا تم تمرير IDs، فلتر حسبهم
+        if (!empty($this->employeeIds)) {
+            $query->whereIn('user_id', $this->employeeIds);
+        }
+
+        return $query->get()->map(function ($record) {
+            return [
+                'Employee Name' => $record->employee->name,
+                'Email' => $record->employee->email,
+                'Date' => $record->date,
+                'Status' => $record->status,
+                'Check In' => $record->check_in,
+                'Check Out' => $record->check_out,
+            ];
+        });
     }
 
     public function headings(): array
